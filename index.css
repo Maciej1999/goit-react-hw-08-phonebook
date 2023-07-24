@@ -7,7 +7,7 @@
     inset -1px -1px 0px 1px #f1f1f177, inset -70px -30px 40px 0px #ffffff18;
   --border-inset: 2px solid white;
   --border: 0px solid lightgray;
-  --border-medium: 1px solid red;
+  --border-medium: 1px solid rgba(255, 0, 0, 0.868);
   --bg-highlighted: #2aea4a6d;
   --bg-highlighted-solid: #22f729;
   --bg-outline: #00344c78;
