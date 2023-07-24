@@ -1,17 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+
 import { store } from './redux/store';
-import { App } from 'components/App';
+import { App } from './components/App';
 import './index.css';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter basename="goit-react-hw-08-phonebook">
-        <App />
-      </BrowserRouter>
+      <App />
     </Provider>
-  </React.StrictMode>
+  </React.StrictMode>,
+  document.getElementById('root')
 );
