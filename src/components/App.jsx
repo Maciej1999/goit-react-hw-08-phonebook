@@ -1,20 +1,80 @@
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { useEffect, lazy, Suspense } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Layout } from './Layout/Layout';
+import { Loader } from './Loader/Loader';
+import { PrivateRoute } from './PrivateRoute/PrivateRoute';
+import { RestrictedRoute } from './RestrictedRoute/RestrictedRoute';
+import { setError } from 'redux/auth/slice';
+import { useAuth } from 'hooks';
+import { refreshUser } from 'redux/auth/operations';
 
-import { ContactForm } from './ContactForm/ContactForm';
-import { ContactList } from './ContactList/ContactList';
-import { Filter } from './FilterByName/FilterByName';
-import css from './App.module.css';
+const HomePage = lazy(() => import('../pages/HomePage'));
+const RegisterPage = lazy(() => import('../pages/RegisterPage'));
+const LoginPage = lazy(() => import('../pages/LoginPage'));
+const LogoutPage = lazy(() => import('../pages/LogoutPage'));
+const PhonebookPage = lazy(() => import('../pages/PhonebookPage'));
 
 export const App = () => {
-  return (
-    <div className={css.container}>
-      <h1>Phonebook</h1>
-      <ContactForm />
-      <h2>Contacts</h2>
-      <Filter />
-      <ContactList />
-      <ToastContainer position="top-center" />
-    </div>
+  const dispatch = useDispatch();
+  const { isRefreshing } = useAuth();
+  const { error } = useAuth();
+
+  useEffect(() => {
+    document.title = 'Phonebook';
+  }, []);
+
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        dispatch(setError(null));
+      }, 2000);
+    }
+  }, [error, dispatch]);
+
+  return isRefreshing ? (
+    <b>
+      <Loader txt="refreshingUser" />
+    </b>
+  ) : (
+    <Suspense fallback={<Loader />}>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route
+            path="/register"
+            element={
+              <RestrictedRoute
+                redirectTo="/contacts"
+                component={<RegisterPage />}
+              />
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <RestrictedRoute
+                redirectTo="/contacts"
+                component={<LoginPage />}
+              />
+            }
+          />
+          <Route
+            path="/logout"
+            element={<PrivateRoute redirectTo="/" component={<LogoutPage />} />}
+          />
+          <Route
+            path="/contacts"
+            element={
+              <PrivateRoute redirectTo="/login" component={<PhonebookPage />} />
+            }
+          />
+        </Route>
+      </Routes>
+    </Suspense>
   );
 };

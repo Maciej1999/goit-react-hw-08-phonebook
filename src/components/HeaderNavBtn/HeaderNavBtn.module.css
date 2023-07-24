@@ -1,0 +1,27 @@
+.navLink {
+  display: inline-block;
+  border: 0;
+  transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  padding: 0.5em 0.8em;
+  margin: 0 0.3em;
+  margin: 0 1em;
+  text-decoration: none;
+  border-radius: 6px;
+  color: inherit;
+  font-size: 1.3rem;
+  box-shadow: var(--box-shadow);
+  background-color: var(--bg-regular);
+  border: var(--border);
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  margin: 0 0.2em;
+  background-color: #0000000d;
+  background-color: var(--bg-gentle);
+  cursor: default;
+}
+.navLink:hover:not(.inactive) {
+  cursor: pointer;
+  opacity: 1;
+  background-color: var(--bg-highlighted-solid);
+  transform: scale(1.1);
+}
