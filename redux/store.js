@@ -14,14 +14,6 @@ import {
   REGISTER,
 } from 'redux-persist';
 
-// export const store = configureStore({
-//   reducer: {
-//     contacts: contactsReducer,
-//     filter: filterReducer,
-//     auth: authReducer,
-//   },
-// });
-
 const middleware = [
   ...getDefaultMiddleware({
     serializableCheck: {
@@ -41,7 +33,6 @@ export const store = configureStore({
     auth: persistReducer(authPersistConfig, authReducer),
     contacts: contactsReducer,
     filter: filterReducer,
-    // auth: authReducer,
   },
   middleware,
   devTools: process.env.NODE_ENV === 'development',

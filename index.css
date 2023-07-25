@@ -68,3 +68,10 @@ ul {
   font-size: 40;
   color: #010101;
 }
+.loading {
+  display: flex;
+  flex-direction: center;
+  align-self: center;
+  color: green;
+  background-color: var(--bg-highlighted);
+}
